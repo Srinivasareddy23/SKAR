@@ -1,22 +1,21 @@
 import Image from "next/image";
-import clientBg from "../../../public/Images/clientsBg.jpg";
+import mainBG from "../../../public/Images/mainBG.jpg";
 
 const HomeContent = () => {
   return (
     <div className="flex w-full h-[calc(100vh+60px)] md:h-[calc(100vh-60px)] dark:bg-gray-900 mt-8 ps-10">
-      {/* Main Card */}
+
       <div className="flex flex-col md:flex-row h-full overflow-hidden rounded-md">
-        {/* Image Section */}
+
         <div className="w-full md:w-1/2 h-full">
           <Image
             className="object-cover h-full w-full pe-4 md:pe-0"
-            src={clientBg}
+            src={mainBG}
             alt="Technology"
             priority={true}
           />
         </div>
 
-        {/* Text Content Section */}
         <div className="w-full md:w-1/2 flex flex-col justify-center p-8 text-left">
           <h5 className="mb-4 text-2xl md:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
             Noteworthy Technology Acquisitions 2024

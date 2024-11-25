@@ -1,17 +1,20 @@
-'use client'
+'use client';
 import { useState } from "react";
+import ContactInfo from "@/components/contact/contactInfo";
 
 const ContactUs = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!name || !email || !message) {
-      setStatus("Please fill in all fields.");
+      setPopupMessage("Please fill in all fields.");
+      setShowPopup(true);
       return;
     }
 
@@ -22,7 +25,7 @@ const ContactUs = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/contact", {
+      const response = await fetch("http://localhost:5000/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,16 +33,21 @@ const ContactUs = () => {
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
-
       if (response.ok) {
-        setStatus("Message sent successfully!");
+        setName("");
+        setEmail("");
+        setMessage("");
+
+        setPopupMessage("Thanks for contacting us! We'll get back to you soon.");
       } else {
-        setStatus(result.error || "Failed to send message.");
+        const result = await response.json();
+        setPopupMessage(result.error || "Failed to send message.");
       }
     } catch (error) {
-      setStatus("Error occurred. Please try again.");
+      setPopupMessage("An error occurred. Please try again.");
     }
+
+    setShowPopup(true);
   };
 
   return (
@@ -49,7 +57,6 @@ const ContactUs = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-800">Contact Us</h2>
 
-            {/* Name Field */}
             <input
               type="text"
               placeholder="Your Name"
@@ -58,7 +65,6 @@ const ContactUs = () => {
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 
-            {/* Email Field */}
             <input
               type="email"
               placeholder="Your Email"
@@ -67,7 +73,6 @@ const ContactUs = () => {
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 
-            {/* Message Field */}
             <textarea
               placeholder="Your Message"
               value={message}
@@ -75,7 +80,6 @@ const ContactUs = () => {
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition duration-300"
@@ -83,38 +87,24 @@ const ContactUs = () => {
               Send Message
             </button>
           </form>
-
-          {status && (
-            <div className="mt-4 text-center text-gray-700">{status}</div>
-          )}
         </div>
 
-        {/* Contact Info Section */}
-        <div className="w-full lg:w-1/3 flex flex-col gap-6">
-          <h3 className="text-xl font-bold text-gray-800">Contact Info</h3>
-
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
-              📞
-            </div>
-            <p className="text-gray-700">+91 8877654321</p>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white">
-              📍
-            </div>
-            <p className="text-gray-700">7-21, RTC Cross Roads, Barampeta</p>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white">
-              ✉️
-            </div>
-            <p className="text-gray-700">skarhelp@gmail.com</p>
-          </div>
-        </div>
+        <ContactInfo />
       </div>
+
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 text-center">
+            <p className="text-gray-800 text-lg">{popupMessage}</p>
+            <button
+              onClick={() => setShowPopup(false)}
+              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

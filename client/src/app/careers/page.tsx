@@ -16,8 +16,9 @@ const Careers: React.FC = () => {
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
-    if (!selectedExperience || !file) {
-      alert('Please complete all the fields before submitting!');
+    if (!file || !selectedExperience) {
+      setStatus('Please select your experience and upload a resume.');
+      setIsModalOpen(true);
       return;
     }
 
@@ -26,7 +27,7 @@ const Careers: React.FC = () => {
     formData.append('resume', file);
 
     try {
-      const response = await fetch('http://localhost:5000/upload', {
+      const response = await fetch('http://localhost:5000/api/files/upload', {
         method: 'POST',
         body: formData,
       });
@@ -34,24 +35,28 @@ const Careers: React.FC = () => {
       const result = await response.json();
 
       if (response.ok) {
+        setFile(null);
+        setSelectedExperience('');
+        (document.getElementById('resume') as HTMLInputElement).value = '';
         setStatus('Application submitted successfully!');
-        setIsModalOpen(true); // Open the modal
       } else {
         setStatus(`Error: ${result.error}`);
       }
     } catch (error) {
       setStatus('Error submitting application. Please try again.');
     }
+
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    window.location.reload();
+    setStatus('');
   };
 
   return (
     <div className="container mx-auto py-12 px-6">
-      {/* Header Section */}
+
       <div className="text-center mb-12">
         <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">
           Careers at Skar Company
@@ -64,7 +69,6 @@ const Careers: React.FC = () => {
         </p>
       </div>
 
-      {/* Form Section */}
       <form
         onSubmit={handleSubmit}
         className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg border-t-4 border-blue-500 space-y-6"
@@ -90,7 +94,6 @@ const Careers: React.FC = () => {
           </select>
         </div>
 
-        {/* Resume Upload */}
         <div className="space-y-2">
           <label htmlFor="resume" className="text-gray-700 font-semibold">
             Upload Your Resume:
@@ -104,7 +107,6 @@ const Careers: React.FC = () => {
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition duration-300"
@@ -113,7 +115,6 @@ const Careers: React.FC = () => {
         </button>
       </form>
 
-      {/* Modal Popup */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm text-center">
@@ -123,11 +124,8 @@ const Careers: React.FC = () => {
               className="w-16 h-16 mx-auto mb-4"
             />
             <h3 className="text-lg font-bold text-gray-800">
-              Thank you for applying to Skar Company!
+              {status || 'Processing...'}
             </h3>
-            <p className="text-gray-600 mt-2">
-              We will review your application and get back to you shortly.
-            </p>
             <button
               onClick={closeModal}
               className="mt-6 bg-gradient-to-r from-green-500 to-blue-500 text-white py-2 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-blue-600 transition duration-300"
@@ -137,21 +135,6 @@ const Careers: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* Footer Section */}
-      <div className="mt-12 text-center">
-        <p className="text-lg text-gray-700">
-          Be part of a team that thrives on <span className="text-green-600 font-semibold">innovation</span>, values{' '}
-          <span className="text-blue-600 font-semibold">collaboration</span>, and builds the future together.
-        </p>
-        <p className="text-gray-500 mt-2">
-          For any queries, contact us at{' '}
-          <a href="mailto:careers@skar.com" className="text-blue-600 underline">
-            careers@skar.com
-          </a>
-          .
-        </p>
-      </div>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import MainFooter from "@/components/mainFooter/Footer";
 import TopNavbar from "@/components/mainNavbar/topNavbar";
 
 export const metadata: Metadata = {
-  title: "SKAR Private Limited",
+  title: "SKAR Pvt Ltd.",
   description: "A startup Company",
 };
 

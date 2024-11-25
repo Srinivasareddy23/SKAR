@@ -6,7 +6,7 @@ const NavBar = () => {
       <nav className="flex flex-row justify-between bg-white text-black border-b-2 border-gray-200 p-3">
       <div>
         <Link href={'/'}>
-          <p className="font-bold text-3xl sm:text-3xl mt-2 sm:mt-1 sm:pt-0 cursor-pointer">SKAR</p>
+          <p className="font-bold text-3xl text-green-500 sm:text-3xl mt-2 sm:mt-1 sm:pt-0 cursor-pointer">SKAR</p>
         </Link>
         
       </div>
