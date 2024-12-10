@@ -3,30 +3,33 @@ import mainBG from "../../../public/Images/mainBG.jpg";
 
 const HomeContent = () => {
   return (
-    <div className="flex w-full h-[calc(100vh+60px)] md:h-[calc(100vh-60px)] dark:bg-gray-900 mt-8 ps-10">
+    <div className="flex w-full h-[calc(100vh+60px)] md:h-[calc(100vh-60px)] mt-8 ps-10">
 
-      <div className="flex flex-col md:flex-row h-full overflow-hidden rounded-md">
+      <div className="flex flex-col md:flex-row h-full overflow-hidden rounded-lg shadow-lg">
 
-        <div className="w-full md:w-1/2 h-full">
+        {/* Left Section - Image */}
+        <div className="w-full md:w-1/2 h-full relative">
           <Image
-            className="object-cover h-full w-full pe-4 md:pe-0"
+            className="object-cover h-full w-full rounded-t-md md:rounded-none md:rounded-l-lg"
             src={mainBG}
-            alt="Technology"
+            alt="Technology Image"
             priority={true}
           />
         </div>
 
-        <div className="w-full md:w-1/2 flex flex-col justify-center p-8 text-left">
-          <h5 className="mb-4 text-2xl md:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-            Noteworthy Technology Acquisitions 2024
+        {/* Right Section - Text Content */}
+        <div className="w-full md:w-1/2 flex flex-col justify-center p-10 text-left">
+          <h5 className="mb-4 text-3xl md:text-5xl font-extrabold tracking-tight text-gray-800">
+            Embracing Tomorrow's Technology
           </h5>
-          <p className="mb-6 text-2xl md:text-lg font-light text-gray-700 dark:text-gray-400">
-          Artificial Intelligence (AI) is revolutionizing industries worldwide. From autonomous vehicles to smart healthcare solutions, AI is reshaping how businesses operate and interact with customers. Explore the latest advancements in AI, its potential to transform various sectors, and how it's driving the future of technology.
+          <p className="mb-6 text-lg md:text-xl font-light leading-relaxed text-gray-600">
+            Technology is shaping the future, creating opportunities, and solving real-world challenges. Discover how innovations like AI, blockchain, and IoT are changing industries and driving progress.
           </p>
-          <button className="self-start px-6 py-3 text-lg font-semibold text-white bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
-            Read More
+          <button className="self-start px-8 py-3 text-lg font-semibold text-white bg-gradient-to-br from-purple-500 to-pink-500 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-300 ease-in-out">
+            Explore More
           </button>
         </div>
+
       </div>
     </div>
   );
