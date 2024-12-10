@@ -1,5 +1,6 @@
 import Image from "next/image";
 import mainBG from "../../../public/Images/mainBG.jpg";
+import Link from "next/link";
 
 const HomeContent = () => {
   return (
@@ -25,9 +26,12 @@ const HomeContent = () => {
           <p className="mb-6 text-lg md:text-xl font-light leading-relaxed text-gray-600">
             Technology is shaping the future, creating opportunities, and solving real-world challenges. Discover how innovations like AI, blockchain, and IoT are changing industries and driving progress.
           </p>
-          <button className="self-start px-8 py-3 text-lg font-semibold text-white bg-gradient-to-br from-purple-500 to-pink-500 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-300 ease-in-out">
-            Explore More
-          </button>
+          <Link href='/pioneering'>
+            <button className="self-start px-8 py-3 text-lg font-semibold text-white bg-gradient-to-br from-purple-500 to-pink-500 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all duration-300 ease-in-out">
+              Explore More
+            </button>
+          </Link>
+         
         </div>
 
       </div>
